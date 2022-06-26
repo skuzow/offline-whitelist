@@ -32,6 +32,14 @@ def __add_stripes(uuid):
     return uuid[:8] + '-' + uuid[8:12] + '-' + uuid[12:16] + '-' + uuid[16:20] + '-' + uuid[20:]
 
 
+def check_permission(source: CommandSource, min_permission_level):
+    if source.has_permission_higher_than(min_permission_level - 1):
+        return True
+    else:
+        source.reply('You don\'t permission to run this command')
+        return False
+
+
 def load_config(source: Optional[CommandSource], server: PluginServerInterface):
     global config
     config_file_path = os.path.join('config', '{}.json'.format(PLUGIN_METADATA.id))

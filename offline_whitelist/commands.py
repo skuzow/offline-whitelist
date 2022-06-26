@@ -1,12 +1,13 @@
 import time
 
 from mcdreforged.api.all import *
-from offline_whitelist.utils import get_config, find_file, generate_offline, load_file, dump_file, send_info, send_error
+from offline_whitelist.utils import get_config, find_file, generate_offline, load_file, dump_file, send_info, \
+    send_error, check_permission
 
 
 def whitelist_add(source: CommandSource, username):
     config = get_config()
-    if find_file(source, config.whitelist_path):
+    if find_file(source, config.whitelist_path) and check_permission(source, 3):
         source.get_server().execute(f'whitelist add {username}')
         time.sleep(0.5)
         offline_uuid = generate_offline(source, username)
