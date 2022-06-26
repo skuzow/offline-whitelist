@@ -1,0 +1,14 @@
+{
+    "id": "offline_whitelist",
+    "version": "0.0.1",
+    "name": "OfflineWhitelist",
+    "description": "Offline whitelist helper",
+    "author": "skuzow",
+    "link": "https://github.com/skuzow/offline-whitelist",
+    "dependencies": {
+        "mcdreforged": ">=2.1.0"
+    },
+    "resources": [
+        "LICENSE"
+    ]
+}
