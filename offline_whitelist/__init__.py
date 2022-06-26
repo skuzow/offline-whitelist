@@ -6,18 +6,17 @@ PLUGIN_METADATA = ServerInterface.get_instance().as_plugin_server_interface().ge
 
 
 prefix = '!!offw'
-plugin_name = PLUGIN_METADATA.name
-version = PLUGIN_METADATA.version
+description = PLUGIN_METADATA.description
 help_message = '''
 --- MCDR {1} v{2} ---
-- Offline whitelist helper plugin
+- {3} plugin
 {0} add §6[username] §rAdd offline player to whitelist
-'''.strip().format(prefix, plugin_name, version)
+'''.strip().format(prefix, PLUGIN_METADATA.name, PLUGIN_METADATA.version, description)
 
 
 def on_load(server: PluginServerInterface, old):
     load_config(None, server)
-    server.register_help_message(prefix, PLUGIN_METADATA.description)
+    server.register_help_message(prefix, description)
     register_commands(server)
 
 
