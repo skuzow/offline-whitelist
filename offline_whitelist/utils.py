@@ -67,7 +67,7 @@ def find_file(source: CommandSource, file_path):
     # check if file with path given exists
     if os.path.isfile(file_path):
         return True
-    send_error(source, f'Couldn\'t found file: {config.whitelist_path}', None)
+    send_error(source, f'Couldn\'t found file: {file_path}', None)
     return False
 
 
@@ -88,6 +88,5 @@ def dump_file(source: CommandSource, file_path, file_json):
         write_file = open(file_path, 'w')
         # save changes into the file in the disk, then closes it
         json.dump(file_json, write_file, indent=2)
-        source.get_server().execute('whitelist reload')
     except Exception as error:
         send_error(source, f'Couldn\'t dump file: {file_path}', error)
