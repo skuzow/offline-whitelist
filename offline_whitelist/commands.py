@@ -7,7 +7,7 @@ from offline_whitelist.utils import get_config, find_file, generate_offline, loa
 
 def whitelist_add(source: CommandSource, username):
     config = get_config()
-    if find_file(source, config.whitelist_path) and check_permission(source, 3):
+    if find_file(source, config.whitelist_path) and check_permission(source, config.minimum_permission_level):
         source.get_server().execute(f'whitelist add {username}')
         time.sleep(0.5)
         offline_uuid = generate_offline(source, username)

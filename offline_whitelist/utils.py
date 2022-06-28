@@ -10,6 +10,7 @@ PLUGIN_METADATA = ServerInterface.get_instance().as_plugin_server_interface().ge
 
 class Config(Serializable):
     whitelist_path: str = './server/whitelist.json'
+    minimum_permission_level: int = 2
 
 
 config: Optional[Config] = None
