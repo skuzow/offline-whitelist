@@ -6,7 +6,7 @@ from mcdreforged.api.all import *
 
 def whitelist_add(source: CommandSource, username):
     config = utils.get_config()
-    if utils.find_file(source, config.whitelist_path) and utils.check_permission(source, config.minimum_permission_level):
+    if utils.find_file(source, config.whitelist_path):
         source.get_server().execute(f'whitelist add {username}')
         time.sleep(0.5)
         offline_uuid = utils.generate_offline(source, username)
