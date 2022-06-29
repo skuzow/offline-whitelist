@@ -37,7 +37,7 @@ def check_permission(source: CommandSource, min_permission_level):
     if source.has_permission_higher_than(min_permission_level - 1):
         return True
     else:
-        source.reply('You don\'t permission to run this command')
+        source.reply('§cYou don\'t permission to run this command')
         return False
 
 
@@ -53,12 +53,12 @@ def get_config():
 
 
 def send_info(source: CommandSource, message):
-    source.reply(message)
+    source.reply(f'§a{message}')
     source.get_server().logger.info(message)
 
 
 def send_error(source: CommandSource, message, error):
-    source.reply(message)
+    source.reply(f'§c{message}')
     source.get_server().logger.error(message)
     if error is not None:
         source.get_server().logger.error(error)
