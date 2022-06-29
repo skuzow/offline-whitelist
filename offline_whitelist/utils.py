@@ -41,6 +41,10 @@ def check_permission(source: CommandSource, min_permission_level):
         return False
 
 
+def get_plugin_metadata():
+    return PLUGIN_METADATA
+
+
 def load_config(source: Optional[CommandSource], server: PluginServerInterface):
     global config
     config_file_path = os.path.join('config', '{}.json'.format(PLUGIN_METADATA.id))
