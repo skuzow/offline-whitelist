@@ -49,12 +49,12 @@ def get_config():
 
 
 def send_info(source: CommandSource, message):
-    source.reply(f'§a{message}')
+    source.reply(RText(message, color=RColor.green))
     source.get_server().logger.info(message)
 
 
 def send_error(source: CommandSource, message, error):
-    source.reply(f'§c{message}')
+    source.reply(RText(message, color=RColor.red))
     source.get_server().logger.error(message)
     if error is not None:
         source.get_server().logger.error(error)
