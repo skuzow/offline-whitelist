@@ -5,7 +5,7 @@ from typing import Optional
 
 from mcdreforged.api.all import *
 
-PLUGIN_METADATA = ServerInterface.get_instance().as_plugin_server_interface().get_self_metadata()
+plugin_metadata = ServerInterface.get_instance().as_plugin_server_interface().get_self_metadata()
 
 
 class Config(Serializable):
@@ -19,7 +19,7 @@ config: Optional[Config] = None
 def generate_offline(source: CommandSource, username):
     # extracted from the java code:
     # new GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(Charsets.UTF_8)), name));
-    string = "OfflinePlayer:" + username
+    string = 'OfflinePlayer:' + username
     hash = hashlib.md5(string.encode('utf-8')).digest()
     byte_array = [byte for byte in hash]
     byte_array[6] = hash[6] & 0x0f | 0x30
@@ -34,12 +34,12 @@ def __add_stripes(uuid):
 
 
 def get_plugin_metadata():
-    return PLUGIN_METADATA
+    return plugin_metadata
 
 
 def load_config(source: Optional[CommandSource], server: PluginServerInterface):
     global config
-    config_file_path = os.path.join('config', '{}.json'.format(PLUGIN_METADATA.id))
+    config_file_path = os.path.join('config', '{}.json'.format(plugin_metadata.id))
     config = server.load_config_simple(config_file_path, in_data_folder=False, source_to_reply=source,
                                        echo_in_console=False, target_class=Config)
 

@@ -28,8 +28,8 @@ def whitelist_add(source: CommandSource, username):
 
 
 def reload_plugin(source: PlayerCommandSource):
-    PLUGIN_METADATA = utils.get_plugin_metadata()
-    if source.get_server().reload_plugin(PLUGIN_METADATA.id):
-        utils.send_info(source, f'{PLUGIN_METADATA.name} plugin successfully reloaded!')
+    plugin_metadata = utils.get_plugin_metadata()
+    if source.get_server().reload_plugin(plugin_metadata.id):
+        utils.send_info(source, f'{plugin_metadata.name} plugin successfully reloaded!')
     else:
-        utils.send_error(source, f'There was an error reloading {PLUGIN_METADATA.name} plugin', None)
+        utils.send_error(source, f'There was an error reloading {plugin_metadata.name} plugin', None)

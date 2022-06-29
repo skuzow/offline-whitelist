@@ -2,17 +2,17 @@ import offline_whitelist.commands as commands
 import offline_whitelist.utils as utils
 from mcdreforged.api.all import *
 
-PLUGIN_METADATA = ServerInterface.get_instance().as_plugin_server_interface().get_self_metadata()
+plugin_metadata = ServerInterface.get_instance().as_plugin_server_interface().get_self_metadata()
 
 
 prefix = '!!offw'
-description = PLUGIN_METADATA.description
+description = plugin_metadata.description
 help_message = '''
 --- MCDR {1} v{2} ---
 - {3} plugin
 §7{0} add §6[username] §rAdd offline player to whitelist
 §7{0} reload §rReloads plugin itself
-'''.strip().format(prefix, PLUGIN_METADATA.name, PLUGIN_METADATA.version, description)
+'''.strip().format(prefix, plugin_metadata.name, plugin_metadata.version, description)
 
 
 def on_load(server: PluginServerInterface, old):
