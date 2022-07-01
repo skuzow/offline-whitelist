@@ -50,17 +50,20 @@ def get_config():
 
 def send_info(source: CommandSource, message):
     source.reply(RText(message, color=RColor.green))
-    source.get_server().logger.info(message)
+    if source.is_player:
+        source.get_server().logger.info(message)
 
 
 def send_warning(source: CommandSource, message):
     source.reply(RText(message, color=RColor.gold))
-    source.get_server().logger.warning(message)
+    if source.is_player:
+        source.get_server().logger.warning(message)
 
 
 def send_error(source: CommandSource, message, error):
     source.reply(RText(message, color=RColor.red))
-    source.get_server().logger.error(message)
+    if source.is_player:
+        source.get_server().logger.error(message)
     if error is not None:
         source.get_server().logger.error(error)
 

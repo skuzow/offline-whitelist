@@ -86,7 +86,7 @@ def whitelist_list(source: PlayerCommandSource):
     if utils.find_file(source, config.whitelist_path):
         whitelist_json = utils.load_file(source, config.whitelist_path)
         len_whitelist_json = len(whitelist_json)
-        # player_str -> username : is_offline -> uuid
+        # player_list = username : offline/online -> uuid
         player_list = f'''--- Whitelist List : {config.whitelist_path} ---\n'''
         for index, player in enumerate(whitelist_json):
             username = player["name"]
@@ -100,7 +100,8 @@ def whitelist_list(source: PlayerCommandSource):
             if not index == len_whitelist_json - 1:
                 player_list += '\n'
         source.reply(player_list)
-        source.get_server().logger.info(f'\n{player_list}')
+        if source.is_player:
+            source.get_server().logger.info(f'\n{player_list}')
 
 
 def reload_plugin(source: PlayerCommandSource):
