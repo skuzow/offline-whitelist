@@ -5,11 +5,7 @@ jobs:
   build:
     strategy:
       matrix:
-        # Use these Python versions
-        python: [
-            3.6
-        ]
-        # and run on both Linux and Windows
+        python: [ 3.6 ]
         os: [ ubuntu-20.04, windows-2022 ]
     runs-on: ${{ matrix.os }}
     steps:
