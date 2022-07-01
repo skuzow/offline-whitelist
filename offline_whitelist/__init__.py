@@ -10,7 +10,8 @@ description = plugin_metadata.description
 help_message = '''
 --- MCDR {1} v{2} ---
 - {3} plugin
-§7{0} add §6[username] §rAdd offline player to whitelist
+§7{0} add §6[username] §rAdd player to whitelist
+§7{0} remove §6[username] §rRemove player from whitelist
 §7{0} reload §rReloads plugin itself
 '''.strip().format(prefix, plugin_metadata.name, plugin_metadata.version, description)
 
@@ -31,5 +32,6 @@ def register_commands(server: PluginServerInterface):
         on_error(UnknownArgument, lambda src: src.reply(f'Parameter error! Please enter §7{prefix}§r to get plugin help'), handled=True).
         runs(lambda src: src.reply(help_message)).
         then(Literal('add').then(get_username(lambda src, ctx: commands.whitelist_add(src, ctx['username'])))).
+        then(Literal('remove').then(get_username(lambda src, ctx: commands.whitelist_remove(src, ctx['username'])))).
         then(Literal('reload').runs(commands.reload_plugin))
     )

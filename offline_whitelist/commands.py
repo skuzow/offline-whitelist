@@ -66,6 +66,32 @@ def whitelist_add(source: PlayerCommandSource, username):
         server.execute('whitelist reload')
 
 
+def whitelist_remove(source: PlayerCommandSource, username):
+    config = utils.get_config()
+    if utils.find_file(source, config.whitelist_path):
+        whitelist_json = utils.load_file(source, config.whitelist_path)
+        whitelist_json_filter = [obj for obj in whitelist_json if obj["name"] == username]
+        server = source.get_server()
+        # player inside whitelist
+        len_whitelist_json_filter = len(whitelist_json_filter)
+        if len_whitelist_json_filter > 0:
+            copy_whitelist_json = whitelist_json.copy()
+            removed = 0
+            for player in copy_whitelist_json:
+                if player["name"] == username:
+                    whitelist_json.remove(player)
+                    # exit when finishes removing player from whitelist
+                    removed += 1
+                    if removed == len_whitelist_json_filter:
+                        break
+            utils.dump_file(source, config.whitelist_path, whitelist_json)
+            utils.send_info(source, f'Successfully removed from whitelist: {username}')
+            server.execute('whitelist reload')
+        # player not inside whitelist
+        else:
+            utils.send_error(source, f'Player not whitelisted: {username}', None)
+
+
 def reload_plugin(source: PlayerCommandSource):
     plugin_metadata = utils.get_plugin_metadata()
     if source.get_server().reload_plugin(plugin_metadata.id):
