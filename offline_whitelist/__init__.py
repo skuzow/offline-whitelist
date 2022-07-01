@@ -2,7 +2,7 @@ import offline_whitelist.commands as commands
 import offline_whitelist.utils as utils
 from mcdreforged.api.all import *
 
-plugin_metadata = ServerInterface.get_instance().as_plugin_server_interface().get_self_metadata()
+plugin_metadata = utils.get_plugin_metadata()
 
 
 prefix = '!!offw'
