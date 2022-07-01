@@ -17,14 +17,14 @@ def whitelist_add(source: PlayerCommandSource, username):
             # online or offline whitelisted
             if len_whitelist_json_filter == 1:
                 # online whitelisted
-                if not whitelist_json_filter[0]["uuid"] == offline_uuid:
-                    for player in whitelist_json:
-                        if player["name"] == username:
-                            player["uuid"] = offline_uuid
-                            break
+                player = whitelist_json_filter[0]
+                if not player["uuid"] == offline_uuid:
+                    # remove player with online uuid from whitelist & then change uuid to offline and add back
+                    whitelist_json.remove(player)
+                    player["uuid"] = offline_uuid
+                    whitelist_json.append(player)
                     utils.dump_file(source, config.whitelist_path, whitelist_json)
-                    server.logger.info(f'Player {username} whitelisted online, changed uuid to offline one')
-                    utils.send_info(source, f'Successfully added to whitelist: {username}')
+                    utils.send_info(source, f'Player already whitelisted online, changed online uuid to offline one: {username}')
                 # offline whitelisted
                 else:
                     utils.send_error(source, f'Player already whitelisted: {username}', None)
@@ -32,15 +32,10 @@ def whitelist_add(source: PlayerCommandSource, username):
             else:
                 # clear online whitelist & keep offline
                 # server.execute(f'whitelist remove {username}') not valid if player is in user-cache, removes offline
-                online_index = -1
-                for index, player in enumerate(whitelist_json):
-                    if player["name"] == username and not player["uuid"] == offline_uuid:
-                        online_index = index
-                        break
-                whitelist_json.pop(online_index)
+                online_player = [obj for obj in whitelist_json_filter if not obj["uuid"] == offline_uuid][0]
+                whitelist_json.remove(online_player)
                 utils.dump_file(source, config.whitelist_path, whitelist_json)
-                server.logger.info(f'Player {username} whitelisted online & offline, removed online')
-                utils.send_error(source, f'Player already whitelisted: {username}', None)
+                utils.send_error(source, f'Player already whitelisted online & offline, removed online: {username}', None)
         # player not inside whitelist or username misspelled
         else:
             server.execute(f'whitelist add {username}')
@@ -75,15 +70,9 @@ def whitelist_remove(source: PlayerCommandSource, username):
         # player inside whitelist
         len_whitelist_json_filter = len(whitelist_json_filter)
         if len_whitelist_json_filter > 0:
-            copy_whitelist_json = whitelist_json.copy()
-            removed = 0
-            for player in copy_whitelist_json:
+            for player in whitelist_json_filter:
                 if player["name"] == username:
                     whitelist_json.remove(player)
-                    # exit when finishes removing player from whitelist
-                    removed += 1
-                    if removed == len_whitelist_json_filter:
-                        break
             utils.dump_file(source, config.whitelist_path, whitelist_json)
             utils.send_info(source, f'Successfully removed from whitelist: {username}')
             server.execute('whitelist reload')
