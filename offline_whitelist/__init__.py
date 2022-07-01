@@ -13,7 +13,7 @@ help_message = '''
 §7{0} add §6[username] §rAdd player to whitelist
 §7{0} remove §6[username] §rRemove player from whitelist
 §7{0} list §rShow players inside whitelist
-§7{0} reload §rReloads plugin itself
+§7{0} reload §rReload plugin itself
 '''.strip().format(prefix, plugin_metadata.name, plugin_metadata.version, description)
 
 
