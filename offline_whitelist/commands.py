@@ -40,9 +40,9 @@ def whitelist_add(source: PlayerCommandSource, username):
         else:
             server.execute(f'whitelist add {username}')
             time.sleep(0.1)
-            whitelist_json = utils.load_file(source, config.whitelist_path)
+            whitelist_json_add = utils.load_file(source, config.whitelist_path)
             found = False
-            for player in whitelist_json:
+            for player in whitelist_json_add:
                 if player["name"] == username:
                     found = True
                     if not player["uuid"] == offline_uuid:
@@ -52,11 +52,11 @@ def whitelist_add(source: PlayerCommandSource, username):
                         server.logger.info(f'Player {username} already in user-cache, whitelisted like usual')
                     break
             if found:
-                utils.dump_file(source, config.whitelist_path, whitelist_json)
+                utils.dump_file(source, config.whitelist_path, whitelist_json_add)
                 utils.send_info(source, f'Successfully added to whitelist: {username}')
             else:
                 # couldn't find nickname because bad written / only for online players
-                server.execute(f'whitelist remove {username}')
+                utils.dump_file(source, config.whitelist_path, whitelist_json)
                 utils.send_error(source, f'Username is misspelled: {username}', None)
         server.execute('whitelist reload')
 
