@@ -1,6 +1,6 @@
 {
     "id": "offline_whitelist",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "name": "OfflineWhitelist",
     "description": "Offline whitelist helper",
     "author": "skuzow",
