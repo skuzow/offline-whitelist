@@ -39,7 +39,7 @@ def whitelist_add(source: PlayerCommandSource, username):
         # player not inside whitelist or username misspelled
         else:
             server.execute(f'whitelist add {username}')
-            time.sleep(0.1)
+            time.sleep(1)
             whitelist_json_add = utils.load_file(source, config.whitelist_path)
             found = False
             for player in whitelist_json_add:
