@@ -81,6 +81,28 @@ def whitelist_remove(source: PlayerCommandSource, username):
             utils.send_error(source, f'Player not whitelisted: {username}', None)
 
 
+def whitelist_list(source: PlayerCommandSource):
+    config = utils.get_config()
+    if utils.find_file(source, config.whitelist_path):
+        whitelist_json = utils.load_file(source, config.whitelist_path)
+        len_whitelist_json = len(whitelist_json)
+        # player_str -> username : is_offline -> uuid
+        player_list = f'''--- Whitelist List : {config.whitelist_path} ---\n'''
+        for index, player in enumerate(whitelist_json):
+            username = player["name"]
+            uuid = player["uuid"]
+            offline_uuid = utils.generate_offline(source, username)
+            if uuid == offline_uuid:
+                player_list += f'§7{username} §r: §aoffline §r-> §r{uuid}'
+            else:
+                player_list += f'§7{username} §r: §conline §r-> §r{uuid}'
+            # no line jump for last line
+            if not index == len_whitelist_json - 1:
+                player_list += '\n'
+        source.reply(player_list)
+        source.get_server().logger.info(f'\n{player_list}')
+
+
 def reload_plugin(source: PlayerCommandSource):
     plugin_metadata = utils.get_plugin_metadata()
     if source.get_server().reload_plugin(plugin_metadata.id):
