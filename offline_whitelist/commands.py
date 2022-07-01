@@ -24,7 +24,7 @@ def whitelist_add(source: PlayerCommandSource, username):
                     player["uuid"] = offline_uuid
                     whitelist_json.append(player)
                     utils.dump_file(source, config.whitelist_path, whitelist_json)
-                    utils.send_info(source, f'Player already whitelisted online, changed online uuid to offline one: {username}')
+                    utils.send_warning(source, f'Player already whitelisted online, changed online uuid to offline: {username}')
                 # offline whitelisted
                 else:
                     utils.send_error(source, f'Player already whitelisted: {username}', None)
@@ -35,7 +35,7 @@ def whitelist_add(source: PlayerCommandSource, username):
                 online_player = [obj for obj in whitelist_json_filter if not obj["uuid"] == offline_uuid][0]
                 whitelist_json.remove(online_player)
                 utils.dump_file(source, config.whitelist_path, whitelist_json)
-                utils.send_error(source, f'Player already whitelisted online & offline, removed online: {username}', None)
+                utils.send_warning(source, f'Player already whitelisted online & offline, removed online: {username}')
         # player not inside whitelist or username misspelled
         else:
             server.execute(f'whitelist add {username}')
