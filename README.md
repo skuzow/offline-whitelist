@@ -29,7 +29,7 @@ Location: `config/offline_whitelist.json`
 
 ## 🗂️ Required Python libraries
 
-- [mcdreforged](https://github.com/Fallen-Breath/MCDReforged) >= 1.2.0
+- [mcdreforged](https://github.com/Fallen-Breath/MCDReforged) >= 2.0.0
 
 To install them execute:
 
